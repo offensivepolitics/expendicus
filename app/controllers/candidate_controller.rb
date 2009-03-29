@@ -1,6 +1,5 @@
 include TransAPI
 require 'open_flash_chart'
-include OpenFlashChart
 
 class CandidateController < ApplicationController
 
