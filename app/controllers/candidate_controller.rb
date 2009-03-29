@@ -7,7 +7,7 @@ class CandidateController < ApplicationController
 	  @expenditures_by_candidate = Expenditure.total_expenditures_by_candidate(5)
 	  @expenditures_historgram_data = Expenditure.expenditure_histogram_by_district
     @expenditures_histogram_keys = Expenditure.expenditure_histogram_keys_ordered
-    @expenditures_historgram_chart = open_flash_chart_object(360,300,"/candidate/expenditures_by_district")
+    @expenditures_historgram_chart = open_flash_chart_object(360,300,url_for :controller => :candidate, :action => "expenditures_by_district")
 	  
 	end
 	
@@ -65,7 +65,7 @@ class CandidateController < ApplicationController
 
 	def show
 	  @candidate = Candidate.find(:first, :conditions => {:id => params[:id]}) 
-	  redirect_to '/candidate' and return if @candidate.nil? == true
+	  redirect_to url_for :controller => 'candiate', :action => 'index' and return if @candidate.nil? == true
     
     if @candidate.candidate_financial_summaries.size > 0 then
       @financial_summary = @candidate.candidate_financial_summaries[0]
