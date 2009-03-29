@@ -1,5 +1,5 @@
 include TransAPI
-require 'open_flash_chart'
+#require 'open_flash_chart'
 
 class CandidateController < ApplicationController
 
@@ -8,7 +8,7 @@ class CandidateController < ApplicationController
 	  @expenditures_by_candidate = Expenditure.total_expenditures_by_candidate(5)
 	  @expenditures_historgram_data = Expenditure.expenditure_histogram_by_district
     @expenditures_histogram_keys = Expenditure.expenditure_histogram_keys_ordered
-    @expenditures_historgram_chart = open_flash_chart_object(360,300,url_for(:controller => :candidate, :action => "expenditures_by_district"))
+    @expenditures_historgram_chart = open_flash_chart_object(360,300,url_for(:controller => :candidate, :action => "expenditures_by_district"),true,'/expendicus/')
 	  
 	end
 	
@@ -20,7 +20,7 @@ class CandidateController < ApplicationController
       y_min = 0
       y_max = 0
 
-      bar = OpenFlashChart::BarFilled.new('#4D89F9')
+      bar = BarFilled.new('#4D89F9')
     
       #C6D9FD
       bar.tooltip = 'Count: #val#'
