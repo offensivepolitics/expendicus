@@ -87,7 +87,7 @@ class DistrictController < ApplicationController
     
     @pac_summary = @district.pac_summary
         
-    @pac_summary_ofc_chart = open_flash_chart_object(360,300,"/district/pac_summary_data/#{@district.id}")
+    @pac_summary_ofc_chart = open_flash_chart_object(360,300,url_for(:controller => 'district',:action => 'pac_summary_data',:id => @district.id),true,ActionController::Base.relative_url_root)
     
     @youtube_search_terms = @election.candidates.collect { |c| "#{c.firstname} #{c.lastname}"}
     @youtube_search_terms << "#{@district.to_s}"

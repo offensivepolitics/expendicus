@@ -7,7 +7,7 @@ class CandidateController < ApplicationController
 	  @expenditures_by_candidate = Expenditure.total_expenditures_by_candidate(5)
 	  @expenditures_historgram_data = Expenditure.expenditure_histogram_by_district
     @expenditures_histogram_keys = Expenditure.expenditure_histogram_keys_ordered
-    @expenditures_historgram_chart = open_flash_chart_object(360,300,url_for(:controller => :candidate, :action => "expenditures_by_district"),true,'/expendicus/')
+    @expenditures_historgram_chart = open_flash_chart_object(360,300,url_for(:controller => :candidate, :action => "expenditures_by_district"),true,ActionController::Base.relative_url_root)
 	  
 	end
 	
