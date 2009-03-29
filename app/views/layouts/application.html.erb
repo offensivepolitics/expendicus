@@ -4,7 +4,7 @@
 <head>
 <title>Expendicus - Independent Expenditure Tracker</title>
 <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css"> 
-<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" media="screen" />
 <%= javascript_include_tag "prototype"%>
 <%= javascript_include_tag :all %>
   <script type="text/javascript">
@@ -81,10 +81,10 @@
 <h1><b>Expendicus</b> Independent Expenditure Tracking</h1>
  <div id="menu">
   <ul id="nav">
-   <li id="navi_home"><a href="/">Home</a></li>
-   <li id="navi_candidate"><a href="/candidate/">Candidates</a></li>
-   <li id="navi_committee"><a href="/committee/">Committees</a></li>
-	 <li id='navi_district'><a href="/district/">Districts</a></li>
+   <li id="navi_home"><a href="<%= url_for :controller => 'home',:action => 'index' %>">Home</a></li>
+   <li id="navi_candidate"><a href="<%= url_for :controller => 'candidate',:action => 'index' %>">Candidates</a></li>
+   <li id="navi_committee"><a href="<%= url_for :controller => 'committee',:action => 'index' %>">Committees</a></li>
+	 <li id='navi_district'><a href="<%= url_for :controller => 'district',:action => 'index' %>">Districts</a></li>
   </ul>
  </div>
 </div>

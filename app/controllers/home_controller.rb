@@ -5,9 +5,9 @@ class HomeController < ApplicationController
   layout proc { |controller| controller.request.xhr? ? nil : 'application' }
   
 	def index
-		@map = GMap.new("map_div")
-		@map.control_init(:large_map => true,:map_type => true)
-		@map.center_zoom_init([37.0625,-95.677068],4)
+		#@map = GMap.new("map_div")
+		#@map.control_init(:large_map => true,:map_type => true)
+		#@map.center_zoom_init([37.0625,-95.677068],4)
 		
 		
 		#@last_expenditures = Expenditure.last_expenditures(5)
