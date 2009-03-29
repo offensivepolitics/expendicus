@@ -1,6 +1,6 @@
 <script>
   function goToDistrict() {
-    window.location = '/district/' + $('district_select').value;
+    window.location = "#{ActionController::Base.relative_url_root}/#{/district/}" + $('district_select').value;
   }
 </script>
 
