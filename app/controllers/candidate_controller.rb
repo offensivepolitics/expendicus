@@ -1,5 +1,4 @@
 include TransAPI
-require 'open_flash_chart'
 
 class CandidateController < ApplicationController
 
@@ -20,7 +19,7 @@ class CandidateController < ApplicationController
       y_min = 0
       y_max = 0
 
-      bar = BarFilled.new('#4D89F9')
+      bar = OpenFlashChart::BarFilled.new('#4D89F9')
     
       #C6D9FD
       bar.tooltip = 'Count: #val#'
