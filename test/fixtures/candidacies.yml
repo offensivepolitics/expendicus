@@ -1,0 +1,27 @@
+# == Schema Information
+# Schema version: 20090225132948
+#
+# Table name: candidacies
+#
+#  id           :integer(4)      not null, primary key
+#  election_id  :integer(4)
+#  candidate_id :integer(4)
+#  winner       :integer(4)
+#  votecount    :integer(4)
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  election_id: 1
+  candidate_id: 1
+  winner: 1
+  votecount: 1
+
+two:
+  election_id: 1
+  candidate_id: 1
+  winner: 1
+  votecount: 1

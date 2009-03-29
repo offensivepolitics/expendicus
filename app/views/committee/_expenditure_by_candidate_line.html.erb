@@ -1,0 +1,8 @@
+<tr>
+  <td><%=expenditure_by_candidate_line.expenditure_date%></td>
+  <td><%= link_to "#{expenditure_by_candidate_line.candidate.firstname} #{expenditure_by_candidate_line.candidate.lastname}",candidate_path(expenditure_by_candidate_line.candidate)  %></td>
+  <td><%= link_to "#{expenditure_by_candidate_line.candidate.district_for(2008).to_s}",district_path(expenditure_by_candidate_line.candidate.district_for(2008))  %></td>
+  <td class="amount"><%= expenditure_by_candidate_line.support_oppose %></td>              
+  <td class="amount"><%= number_to_currency(expenditure_by_candidate_line.expenditure_amount) %></td>
+  <td class="amount"><%= number_to_currency(expenditure_by_candidate_line.expenditure_ytd) %></td>
+</td>

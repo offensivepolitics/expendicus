@@ -1,0 +1,6 @@
+<table class="dataTable" style="width:100%;">
+   <tr><td colspan=5 class="wide">Expenditures made on behalf of candidate</td></tr>
+   <tr><th align="right">Date</th><th>Committee</th><th style="text-align:right">Support/Oppose</th><th style="text-align:right">Amount</th><th style="text-align:right">YTD</th></tr>
+   <%= render :partial => 'expenditure_by_candidate_line',:collection => @expenditures %>
+</table>
+<%= will_paginate @expenditures,:renderer => 'RemoteLinkRenderer',:param_name => "expenditures_by_candidate_page" %> <%= link_to image_tag('icons/table_save.png',:border => 0,:alt => "Save CSV") + "  (CSV)",candidate_path(@candidate,:format => :csv,:key => "itemized") %></i>

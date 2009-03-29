@@ -1,0 +1,67 @@
+<HTML>
+ <HEAD>
+  <TITLE> inex </TITLE>
+
+	<link rel="stylesheet" href="/stylesheets/base.css" type="text/css" media="screen" />
+	<link rel="stylesheet" id="current-theme" href="/themes/default/style.css" type="text/css" media="screen" />
+	<script type="text/javascript" charset="utf-8" src="/javascripts/jquery-1.3.min.js"></script> 
+	<script type="text/javascript" charset="utf-8">
+	var Theme = {
+	  activate: function(name) {
+		window.location.hash = '/themes/' + name
+		Theme.loadCurrent();
+	  },
+	  
+	  loadCurrent: function() {
+		matches = window.location.hash.match(/#(.+)/);
+		if (matches && matches.length > 1) {
+		  $('#current-theme').attr('href', matches[1] + '/style.css');
+		}
+	  }
+	}        
+	function setTab() {
+		controller_name = "navi_<%= @controller.controller_name %>";
+		$("#" + controller_name).attr('class','active');
+	}
+    
+
+	$(document).ready(Theme.loadCurrent);
+	$(document).ready(setTab);
+	</script> 
+
+	<%= GMap.header unless @map.nil? %>
+	<%= @map.to_html unless @map.nil? or false %>
+
+
+ </HEAD>
+
+ <BODY>
+	<div id="container">
+		<div id="header">
+			<h1><a href="index.html">In/ex</a></h1>
+			<div id="main-navigation">
+				<ul>
+					<li id='navi_home'><a href="/">Home</a></li>
+					<li id='navi_legislator'><a href="/legislator/" >Legislators</a></li>
+					<li id='navi_committee'><a href="#">Committees</a></li>
+					<li id='navi_district'><a href="/district/">Districts</a></li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+		</div> 
+
+		<div id="wrapper">
+			<div id="content">
+				<div id="main">
+					<%= yield %>
+				</div>
+			</div>
+			<div class="clear"></div>      
+		</div>
+		<div id="footer">
+		  Copyright &copy; 2009 Your Site.
+		</div>
+
+	</div>	 
+ </BODY>
+</HTML>

@@ -1,0 +1,30 @@
+# == Schema Information
+# Schema version: 20090225132948
+#
+# Table name: committee_transactions
+#
+#  id                  :integer(4)      not null, primary key
+#  committee_id        :integer(4)
+#  candidate_id        :integer(4)
+#  transaction_date    :date
+#  amount              :float
+#  transaction_type_id :integer(4)
+#  created_at          :datetime
+#  updated_at          :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  committee_id: 1
+  candidate_id: 1
+  transaction_date: 2009-01-24
+  amount: 1.5
+  transaction_type: MyString
+
+two:
+  committee_id: 1
+  candidate_id: 1
+  transaction_date: 2009-01-24
+  amount: 1.5
+  transaction_type: MyString

@@ -1,0 +1,33 @@
+<script>
+  function goToDistrict() {
+    window.location = '/district/' + $('district_select').value;
+  }
+</script>
+
+<div id="hd"><h1>Districts</h1></div>
+    <br>
+     <div id="bd">
+<div id="yui-main">
+<div class="yui-b"  style="background:#eee;padding: 5px 5px 5px 5px;">
+<div class="yui-g">
+<div class="yui-u first">
+ <div id="expenditures_by_district_table">
+    <%= render :partial => 'expenditure_by_district_table', :object => @expenditures_by_district%> 
+  </div>
+</div>
+<div class="yui-u">
+  <h2>Find district by state</h2>
+  <label>State:</label><%= select_tag('state',options_for_select(@states),{:include_blank => true,:selected => 0}) %><br>
+  <div id="districts"><label>District:</label> <%= select_tag('district',options_for_select(@districts),{:include_blank => true}) %></div>
+  <%= observe_field "state", :update => "districts",
+  :with => "id", :url => { :controller => "district",
+  :action => "get_districts" } %>
+  <br><br>
+  <h2>Find district by candidate</h2>
+  Candidate name: <input id="genericSearchBox">
+   <%= link_to_remote 'Search', :url => {:controller => 'district',:action => 'search'},:with => "'name=' + $('genericSearchBox').value" %></td></tr>
+  <tr><td><div id="searchResultsDiv"></div>
+</div>
+
+</div>
+

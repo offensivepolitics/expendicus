@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  candidate_id: 1
+  rank: 
+  errors: 1
+  total: 1
+  percentage_correct: 
+  seat_type: MyString
+
+two:
+  candidate_id: 1
+  rank: 
+  errors: 1
+  total: 1
+  percentage_correct: 
+  seat_type: MyString

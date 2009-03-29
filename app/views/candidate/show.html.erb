@@ -1,0 +1,123 @@
+ <div id="hd"><h1><%= @candidate.name %></h1></div>
+    <br>
+     <div id="bd">
+<div id="yui-main">
+<div class="yui-b"  style="background:#eee;padding: 5px 5px 5px 5px;">
+<div class="yui-g">
+  <div class="yui-u first">
+    <table class="dataTable">
+      <tr><td class="wide" colspan=2>Candidate Details</td></tr>
+      <tr><td><b></b></td><td><%= %></td></tr>
+      <tr><td><b>Name</b></td><td><%= @candidate.name %></td></tr>
+      <tr><td><b>Party</b></td><td><%= @candidate.political_party.name %></td></tr>
+      <tr><td><b>Candidate In</b></td><td>
+          <% if @district.nil? %>
+            <i>No candidacy information</i>
+          <% else %>
+            <%= link_to @district.to_s, district_url(@district) %>
+          <% end %>
+        </td></tr>
+      <tr><td><b>BioGuide Page</b></td><td>
+          <% if @candidate.bioguide_url.nil? %>
+            <i>No details</i>
+          <% else %>
+            <%= link_to "#{@candidate.lastname} @BioGuide",@candidate.bioguide_url %>
+          <% end %>
+        </td></tr>
+      <tr><td><b>GovTrack Page</b></td><td>
+          <% if @candidate.govtrack_url.nil? %>
+            <i>No details</i>
+          <% else %>
+            <%= link_to "#{@candidate.lastname} @GovTrack",@candidate.govtrack_url %>
+          <% end %>
+        </td></tr>
+      <tr><td><b>VoteSmart Page</b></td><td>
+          <% if @candidate.govtrack_url.nil? %>
+            <i>No details</i>
+          <% else %>
+            <%= link_to "#{@candidate.lastname} @GovTrack",@candidate.govtrack_url %>
+          <% end %>
+        </td></tr>
+        <tr><td><b>OpenSecrets Page</b></td><td>
+            <% if @candidate.crp_url.nil? %>
+              <i>No details</i>
+            <% else %>
+              <%= link_to "#{@candidate.lastname} @OpenSecrets",@candidate.crp_url %>
+            <% end %>
+          </td></tr>
+    </table>
+  </div>
+  <div class="yui-u">
+  <table class="dataTable">
+    <tr><td class="wide" colspan=2>Financail Details</td></tr>
+    <% if @financial_summary.nil? == true then %>
+      <tr><td><i>No financial summary found for 2008</i></td><td class="amount"></td><tr>
+    <% else %>
+    <tr><td><b>Total Receipts</b></td><td class="amount"><%=number_to_currency(@financial_summary.total_receipts) %></td><tr>
+    <tr><td><b>Contributions (individuals)</b></td><td class="amount"><%=number_to_currency(@financial_summary.total_individual_contributions) %></td><tr>
+    <tr><td><b>Contributions (committees)</b></td><td class="amount"><%=number_to_currency(@financial_summary.total_pac_contributions) %></td><tr>
+    <tr><td><b>Total Disbursements</b></td><td class="amount"><%=number_to_currency(@financial_summary.total_disbursments) %></td><tr>
+    <tr><td><b>Cash on Hand (period start)</b></td><td class="amount"><%=number_to_currency(@financial_summary.beginning_coh) %></td><tr>
+    <tr><td><b>Cash on Hand (period end)</b> </td><td class="amount"><%=number_to_currency(@financial_summary.ending_coh)%></td></tr>  
+    <% end %>
+  </table>
+  </div>
+  </div>
+  <div class="yui-g">
+  <div class="yui-u first"  style="width:100%;" >
+    <div id="expenditures_by_candidate_table">
+      <%= render :partial => "expenditure_by_candidate_table", :object => @expenditures %>
+    </div>
+  </div>
+  </div>
+  <div class="yui-g">
+    <div class="yui-u" style="width:100%; overflow: auto;">
+      <table class="dataTable" style="width:95%">
+      <tr><td class="wide" colspan="1">YouTube Search Results</td></tr>
+        <% if @youtube_search_terms.nil? == false %>
+          <%= render :partial => 'candidate/youtube_search_results' %>
+        <% else %>
+          <i>No terms selected</i>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  
+  <div class="yui-g">
+    <div class="yui-u first" style="overflow:auto;">
+      <table class="dataTable">
+        <tr><td class="wide" colspan=4>Industry Contributions</td></tr>
+        <tr><th>Industry</th><th style="text-align:right">From Individuals</th><th style="text-align:right">From PACs</th><th style="text-align:right">Total</th></tr>
+        <% if @industry_contributions.nil? == false %>
+          <% @industry_contributions["industries"]["industry"].each do |ic| %>
+            <tr><td><%=ic["industry_name"] %></td>
+              <td class="amount"><%= number_to_currency(ic["indivs"].to_i) %> </td>
+              <td class="amount"><%= number_to_currency(ic["pacs"].to_i) %> </td>
+              <td class="amount"><%= number_to_currency(ic["total"].to_i) %> </td>
+            </tr>
+          <% end %>
+          <tr><td colspan=4><i>Source: <a href="<%=@industry_contributions["industries"]['source']%>"><%=@industry_contributions["industries"]['origin']%></a></i></td></tr>
+        <% else %>
+          <tr><td><b>No industry data found for this candidate</b></td></tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="yui-u">
+      <table class="dataTable">
+        <tr><td class="wide" colspan=2>Organization Contributions</td></tr>
+        <tr><th>Name</th><th style="text-align:right">Total</th></tr>
+        <% if @org_contributions.nil? == false %>
+          <% @org_contributions["contributors"]["contributor"].each do |oc| %>
+          <tr>
+            <td><%= oc["org_name"]%></td>
+            <td class="amount"><%= number_to_currency(oc["total"].to_i) %></td>
+          </tr>
+          <% end %>
+          <tr><td colspan=4><i>Source: <a href="<%=@org_contributions["contributors"]['source']%>"><%=@org_contributions["contributors"]['origin']%></a></i></td></tr>
+          <tr><td colspan=2><b><%=@org_contributions["contributors"]["notice"]%></td></tr>
+          <% else %>
+            <tr><td colspan="2"><b>No organization data found for this candidate</b></td></tr>            
+        <% end %>
+      </table>
+    </div>
+  </div>

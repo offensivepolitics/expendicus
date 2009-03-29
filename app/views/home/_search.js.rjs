@@ -1,0 +1,32 @@
+@result_text = ''
+render_as_candidate ||= false
+if @results.size == 0
+  @result_text = "No results found for <i>#{params[:name]}</i>"
+else
+  @result_text += "<table class='dataTable'>"
+  @result_text += "<tr><td class='wide' colspan=2>Search Results</td></tr>"
+  @result_text += "<tr><th>Type</th><th>Name</th></tr>"
+  #@result_text = "<ul>"
+  @results.each do |result|
+    @result_text += "<tr>"
+    if result.is_a?(Committee) then
+      @result_text += "<td><i>Committee</i></td>"
+      @result_text += "<td>" + link_to(ellipsiate(result.name), :controller => :committee, :action => 'show',:id => result.id) + "</td>"
+    elsif result.is_a?(Candidate) then      
+      next if result.fecid[0...1] != 'H'
+      next if result.elections.size == 0
+      next if result.elections[0].district == nil
+      @result_text += "<td><i>Candidate</i></td>"
+        if render_as_candidate == true then
+          @result_text += "<td>" + link_to("#{result.lastname}, #{result.firstname}", :controller => :candidate, :action => 'show',:id => result.id) + "</td>"
+        else
+          @result_text += "<td>" + link_to("#{result.lastname}, #{result.firstname}", :controller => :district, :action => 'show',:id => result.elections[0].district.id) + "</td>"
+        end
+    end
+    @result_text += "</tr>"
+  end
+  #@result_text += "</ul>"
+  @result_text += '</table>'
+end
+page.replace_html :searchResultsDiv, @result_text
+#page.visual_effect :highlight, 'searchResultDiv',:duration => 1

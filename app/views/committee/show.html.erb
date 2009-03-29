@@ -1,0 +1,89 @@
+ <div id="hd"><h1><%=@committee.name %></h1></div>
+    <br>
+     <div id="bd">
+<div id="yui-main">
+<div class="yui-b"  style="background:#eee;padding: 5px 5px 5px 5px;"><div class="yui-g">
+  <div class="yui-u first">
+    <table class="dataTable">
+      <tr><td colspan="2" class="wide">Registration</td></tr>
+      <tr><td><b>Type</b></td><td> <%= @committee.committee_type %></td></tr>
+      <tr><td><b>Designation</b></td><td> <%= @committee.committee_designation %></td></tr>
+
+      <% if @committee.candidate.nil? == false && @committee.candidate.candidacies.size > 0%>
+        <tr><td>
+        <b>Connected Candidate</b></td><td> <%= link_to "#{@committee.candidate.firstname} #{@committee.candidate.lastname} (#{@committee.candidate.district_for(2008).to_s})",@committee.candidate.district_for(2008)  %><br>
+        </td></tr>
+      <% end %>
+      <tr><td><b>Connected Orginization Name</b></td><td> <%= @committee.connected_org_name %></td></tr>
+      <tr><td><b>Party Affiliation</b></td><td> <%= @committee.political_party.name %></td></tr>
+      <tr><td><b>Interest Group Category</b></td><td> <%= @committee.interest_group_category %></td></tr>    
+    </table>
+    
+  </div>
+  <div class="yui-u">
+  <table class="dataTable">
+  <tr><td colspan="2" class="wide">Financial Summary</td></tr>
+  <% if @financial_summary.is_a?(CommitteeFinancialSummary) %>
+    <tr><td><b>Total Receipts</b> </td><td class="amount"><%=number_to_currency(@financial_summary.total_receipts)%></td></tr>
+    <tr><td><b>Contributions (individuals)</b> </td><td class="amount"><%=number_to_currency(@financial_summary.contributions_from_individuals)%></td></tr>
+    <tr><td><b>Contributions (committees)</b> </td><td class="amount"><%=number_to_currency(@financial_summary.contributions_from_other_committees)%></td></tr>
+    <tr><td><b>Total Disbursements</b> </td><td class="amount"><%=number_to_currency(@financial_summary.total_disbursements)%></td></tr>
+    <tr><td><b>Contributions to other committees</b> </td><td class="amount"><%=number_to_currency(@financial_summary.contributions_to_other_committees)%></td></tr>
+    <tr><td><b>Independent Expenditures</b> </td><td class="amount"><%=number_to_currency(@financial_summary.independent_expenditures)%></td></tr>
+    <tr><td><b>Cash on Hand (period start)</b> </td><td class="amount"><%=number_to_currency(@financial_summary.cash_on_hand_beginning_of_year)%></td></tr>
+    <tr><td><b>Cash on Hand (period end)</b> </td><td class="amount"><%=number_to_currency(@financial_summary.cash_on_hand_close_of_period)%></td></tr>  
+  <% else %>
+    <tr><td><b>Total Receipts</b></td><td class="amount"><%=number_to_currency(@financial_summary.total_receipts) %></td><tr>
+    <tr><td><b>Contributions (individuals)</b></td><td class="amount"><%=number_to_currency(@financial_summary.total_individual_contributions) %></td><tr>
+    <tr><td><b>Contributions (committees)</b></td><td class="amount"><%=number_to_currency(@financial_summary.total_pac_contributions) %></td><tr>
+    <tr><td><b>Total Disbursements</b></td><td class="amount"><%=number_to_currency(@financial_summary.total_disbursments) %></td><tr>
+    <tr><td><b>Cash on Hand (period start)</b></td><td class="amount"><%=number_to_currency(@financial_summary.beginning_coh) %></td><tr>
+    <tr><td><b>Cash on Hand (period end)</b> </td><td class="amount"><%=number_to_currency(@financial_summary.ending_coh)%></td></tr>  
+  <% end %>
+  </table>
+  <br>
+  </div>
+</div>
+<div class="yui-g">
+  <div class="yui-u first"  style="width:100%">
+    <table class="dataTable"  style="width:100%">
+      <tr><td colspan="1" class="wide">YouTube Search Results</td></tr>
+      <% if @youtube_search_terms.nil? == false %>
+        <%= render :partial => 'candidate/youtube_search_results' %>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+
+<div class="yui-g">
+  <div class="yui-u first" style="width:100%;">
+     <% if @committee.candidate.nil? == true %>
+       <div id="expenditures_by_candidate_table">
+        <%= render :partial => "expenditure_by_candidate_table", :object => @expenditures %>
+       </div>
+    <% end %>
+     <br>
+  </div>
+</div>
+<div class="yui-g">
+  <div class="yui-u first" >
+  <% if @committee.candidate.nil? == true %>
+      <div id="expenditures_by_district_table">
+        <%= render :partial => 'expenditure_by_district_table', :object => @expenditures_by_district%> 
+      </div>
+  <% end %>
+  </div>
+  <div class="yui-u">
+    <% if @committee.candidate.nil? == true %>
+      <table class="dataTable" width="100%">
+        <tr><td colspan="1" class="wide">Daily Expenditure Timeline</td></tr>
+        <tr><td>
+        <%= inline_annotated_timeline @expenditures_for_timeline, 320 ,240,:displayExactValues => true %>
+        </td><tr>
+      </table>
+      <%= link_to image_tag('icons/table_save.png',:border => 0,:alt => "Save CSV") + "  (CSV)",committee_path(@committee,:format => :csv,:key => "timeline") %>
+      <br><br>
+    <% end %>  
+  </div>
+</div>

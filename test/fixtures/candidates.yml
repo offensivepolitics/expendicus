@@ -1,0 +1,34 @@
+# == Schema Information
+# Schema version: 20090225132948
+#
+# Table name: candidates
+#
+#  id                 :integer(4)      not null, primary key
+#  firstname          :string(255)
+#  lastname           :string(255)
+#  fullname           :string(255)
+#  political_party_id :integer(4)
+#  fecid              :string(255)
+#  crpid              :string(255)
+#  govtrackid         :string(255)
+#  bioguideid         :string(255)
+#  votesmartid        :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  firstname: MyString
+  lastname: MyString
+  fecid: MyString
+  crpid: MyString
+  party: MyString
+
+two:
+  firstname: MyString
+  lastname: MyString
+  fecid: MyString
+  crpid: MyString
+  party: MyString

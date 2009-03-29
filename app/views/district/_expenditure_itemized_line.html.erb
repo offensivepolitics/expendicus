@@ -1,0 +1,8 @@
+<tr>
+<td><%=expenditure_itemized_line.expenditure_date%></td>
+<td><%= link_to ellipsiate(expenditure_itemized_line.committee.name,35), committee_url(expenditure_itemized_line.committee) %></td>
+<td><%= "#{expenditure_itemized_line.candidate.firstname} #{expenditure_itemized_line.candidate.lastname}"  %></td>
+<td class="amount"><%= expenditure_itemized_line.support_oppose %></td>              
+<td class="amount"><%= number_to_currency(expenditure_itemized_line.expenditure_amount) %></td>
+<td class="amount"><%= number_to_currency(expenditure_itemized_line.expenditure_ytd) %></td>
+</td>

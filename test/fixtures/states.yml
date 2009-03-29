@@ -1,0 +1,24 @@
+# == Schema Information
+# Schema version: 20090225132948
+#
+# Table name: states
+#
+#  id           :integer(4)      not null, primary key
+#  name         :string(255)
+#  abbreviation :string(255)
+#  fipscode     :integer(4)
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  abbreviation: MyString
+  fipscode: 1
+
+two:
+  name: MyString
+  abbreviation: MyString
+  fipscode: 1

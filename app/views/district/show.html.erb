@@ -1,0 +1,82 @@
+<script type="text/javascript" src="/javascripts/swfobject.js"></script>
+ <div id="hd"><h1><%=@district.to_s %></h1></div>
+    <br>
+     <div id="bd">
+<div id="yui-main">
+<div class="yui-b"  style="background:#eee;padding: 5px 5px 5px 5px;"><div class="yui-g">
+  <div class="yui-u first" style="width:100%;">
+
+Candidates:
+
+<table class="dataTable" style="width:100%">
+<tr><td colspan="8" class="wide">Results</td></tr>
+<tr><th>Candidate Name</th><th>Party</th><th>Winner</th><th>Vote%</th><th style="text-align:right;">Support amount</th><th style="text-align:right;">Oppose Amount</th></tr>
+<% @district.elections[0].candidacies.each  do |candidacy| %>
+  <tr>
+    <td><%=link_to candidacy.candidate.lastname,candidate_url(candidacy.candidate)%></td>
+    <td><%=candidacy.candidate.political_party.name%></td>
+    <td><%=(candidacy.winner == 1)?"<b>Yes</b>":"No"%></td>
+    <td><%=(candidacy.votecount > 0)?(candidacy.votecount.to_f / @total_votes_cast.to_f) * 100.to_f : "0" %></td>
+    <td class="amount"><%=number_to_currency(@candidates_support_oppose[candidacy.candidate_id]["S"])%></td>
+    <td class="amount"><%=number_to_currency(@candidates_support_oppose[candidacy.candidate_id]["O"])%></td>
+  </tr>
+<% end %>
+</table>
+<br><br>
+</div>
+</div>
+<div class="yui-g">
+<div class="yui-first" style="width:100%">
+   <div id="expenditure_itemized_table">
+    <%= render :partial => "expenditure_itemized_table", :object => @expenditures %>
+   </div>
+<br>
+</div>
+</div>
+<div class="yui-g">
+  <div class="yui-u first"  style="width:100%">
+    <table class="dataTable"  style="width:100%">
+      <tr><td colspan="1" class="wide">YouTube Search Results</td></tr>
+      <% if @youtube_search_terms.nil? == false %>
+        <%= render :partial => 'candidate/youtube_search_results' %>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<div class="yui-g">
+  <div class="yui-u first">
+    <table class="dataTable">
+      <tr><td colspan=3 class="wide">Committee Support/Oppose totals</td></tr>
+      <tr><th>Committe Name</th><th style="text-align:center">Support</th><th style="text-align:center  ">Oppose</th></tr>
+      <% @pac_summary.keys.uniq.each do |key| %>
+        <tr cols="2">
+          <td><%=link_to ellipsiate(Committee.find(key).name,70),committee_path(Committee.find(key))%></td>
+          <td class="amount"><%=number_to_currency(@pac_summary[key]["S"]) %></td>
+          <td class="amount"><%=number_to_currency(@pac_summary[key]["O"]) %></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= link_to image_tag('icons/table_save.png',:border => 0,:alt => "Save CSV") + "  (CSV)",district_path(@district,:format => :csv,:key => "expenditures_by_committee") %>
+    <br>
+  </div>
+  <div class="yui-u">
+    <table class="dataTable" style="width:100%">
+      <tr><td colspan=1 class="wide">Committe Support/Oppose totals (graph)</td><tr>
+      <tr><td><%= @pac_summary_ofc_chart -%></td></tr>
+    </table>
+  
+  </div>
+</div>
+<div class="yui-g">
+  <div class="yui-u first" style="width:100%">
+    <table class="dataTable">
+      <tr><td colspan="1" class="wide">Daily Expenditure Timeline</td></tr>
+      <tr><td> <%= inline_annotated_timeline @expenditures_for_timeline, 740 ,340,:displayExactValues => true %>
+       </td></tr>
+       <%= link_to image_tag('icons/table_save.png',:border => 0,:alt => "Save CSV") + "  (CSV)",district_path(@district,:format => :csv,:key => "timeline") %>
+    </table>
+  </div>
+</div>
+<br>
+

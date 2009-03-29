@@ -1,0 +1,43 @@
+ <div id="hd"><h1>Committees</h1></div>
+    <br>
+     <div id="bd">
+<div id="yui-main">
+<div class="yui-b"  style="background:#eee;padding: 5px 5px 5px 5px;"><div class="yui-g">
+  <div class="yui-u first">
+    <h2>Biggest spenders</h2>
+    <table class="dataTable">
+    <tr><td class="wide">Committee Name</td><td class="wide">Amount Spent</td></tr>
+    <% @big_spenders.each do |spender| %>
+      <tr>
+        <td><%= link_to ellipsiate(spender[0].name,50),spender[0] %> </td>
+        <td class="amount"><%=number_to_currency(spender[1]) %> </td>
+      </tr>
+    <% end %>
+    </table>
+    </div>
+  <div class="yui-u">
+    <h2>Biggest fundraisers</h2>
+    <table class="dataTable">
+    <tr><td class="wide">Committee Name</td><td class="wide">Total receipts</td></tr>
+    <% @big_fundraisers.each do |committee| %>
+      <tr>
+        <td><%= link_to ellipsiate(committee[0].name,50),committee[0] %> </td>
+        <td class="amount"><%=number_to_currency(committee[1]) %> </td>
+      </tr>
+    <% end %>
+    </table>
+     </div>
+</div>
+<br><br>
+<div class="yui-g">
+  
+  <div class="yui-u first">
+  <h2>Committee Search</h2>
+      <table height="70px">
+        <tr "border-style:none"><td style="border-style:none;"><input id="genericSearchBox">  </input> <%= link_to_remote 'Search', :url => {:controller => 'committee',:action => 'search'},:with => "'name=' + $('genericSearchBox').value" %></td></tr>
+        <tr><td><div id="searchResultsDiv"></div>
+      </table>
+  </div>
+</div>
+
+<br>

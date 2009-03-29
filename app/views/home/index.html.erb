@@ -1,0 +1,67 @@
+ <div id="hd"><h1>Dashboard</h1></div>
+    <br>
+     <div id="bd">
+<div id="yui-main">
+<div class="yui-b"  style="background:#eee;padding: 5px 5px 5px 5px;"><div class="yui-g">
+  <div class="yui-u first">
+    <table class="dataTable">
+      <tr><td class="wide" colspan="2">Congressional Party PACs</td></tr>
+      <tr><th >Name</th><th style="text-align:right">Amount Spent</th></tr>
+      <% @party_pacs.each do |party_pac| %> 
+        <tr>
+          <td><%=link_to ellipsiate(party_pac.name,60),party_pac%></td>
+          <td class="amount"><%=number_to_currency(party_pac.total_expenditures)%></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="yui-u">
+      <table class="dataTable">
+      <tr><td class="wide" colspan=2>Hottest Districts</td></tr>
+      <tr><th>District</th><th style="text-align:right">Amount Spent</th></tr>
+      <% @largest_districts.each do |district| %>
+        <tr>
+          <td><%= link_to district[0].to_s,district[0] %> </td>
+          <td class="amount"><%=number_to_currency(district[1]) %> </td>
+        </tr>
+      <% end %>
+      </table>
+  </div>
+  
+  </div><br>
+  <div class="yui-g">
+  
+  <div class="yui-u first">
+    <table class="dataTable">
+    <tr><td class="wide" colspan="2">Largest Spenders This Cycle</td></tr>
+    <tr><th>Committee Name</th><th style="text-align:right">Amount Spent</th></tr>
+    <% @big_spenders.each do |spender| %>
+      <tr>
+        <td><%= link_to ellipsiate(spender[0].name,60),spender[0] %> </td>
+        <td class="amount"><%=number_to_currency(spender[1]) %> </td>
+      </tr>
+    <% end %>
+    </table>
+  </div>
+  <div class="yui-u">
+    <h2>Name Search</h2>
+      <table height="100%">
+        <tr "border-style:none"><td style="border-style:none;"><input id="genericSearchBox">  </input> <%= link_to_remote 'Search', :url => {:controller => 'home',:action => 'search'},:with => "'name=' + $('genericSearchBox').value" %></td></tr>
+        <tr><td><div id="searchResultsDiv"></div>
+      </table>
+  </div>
+
+</div>
+<div class="yui-g">
+  
+  <div class="yui-u first">
+  annotated_timeline @spending_for_last_30_days, 'annotated-timeline',:displayExactValues => true
+  <!--<div id="annotated-timeline" style='width: 600px; height: 400px'></div> -->
+  </div>
+  <div class="yui-u">
+       @map.div(:width => 600,:height => 400)
+  </div>
+  
+  
+</div>
+

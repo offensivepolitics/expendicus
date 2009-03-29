@@ -1,0 +1,49 @@
+# == Schema Information
+# Schema version: 20090225132948
+#
+# Table name: expenditures
+#
+#  id                       :integer(4)      not null, primary key
+#  schedule                 :string(255)
+#  committee_id             :integer(4)
+#  election_code            :string(255)
+#  expenditure_date         :date
+#  expenditure_amount       :float
+#  expenditure_ytd          :float
+#  expenditure_purpose_code :string(255)
+#  category_code            :string(255)
+#  payee_fecid              :string(255)
+#  support_oppose           :string(255)
+#  candidate_id             :integer(4)
+#  district_id              :integer(4)
+#  created_at               :datetime
+#  updated_at               :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  schedule: MyString
+  committee_id: 1
+  election_code: MyString
+  expenditure_date: 2009-01-02
+  expenditure_amount: 
+  expenditure_ytd: 
+  expenditure_purpose_code: MyString
+  category_code: MyString
+  payee_fecid: MyString
+  support_oppose: MyString
+  legislator_id: 1
+
+two:
+  schedule: MyString
+  committee_id: 1
+  election_code: MyString
+  expenditure_date: 2009-01-02
+  expenditure_amount: 
+  expenditure_ytd: 
+  expenditure_purpose_code: MyString
+  category_code: MyString
+  payee_fecid: MyString
+  support_oppose: MyString
+  legislator_id: 1

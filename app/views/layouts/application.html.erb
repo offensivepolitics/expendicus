@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Expendicus - Independent Expenditure Tracker</title>
+<link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css"> 
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" media="screen" />
+<%= javascript_include_tag "prototype"%>
+<%= javascript_include_tag :all %>
+  <script type="text/javascript">
+	  document.observe("dom:loaded", function() {
+	    controller_name = "navi_<%= @controller.controller_name %>";
+	    $(controller_name).addClassName('activelink');
+	    
+      
+    });
+    
+	</script>
+
+  <% if @map.nil? == false %>
+    <%= GMap.header %>
+    <%= @map.to_html %>
+  <% end %>
+  
+  <% if @youtube_search_terms.nil? == false %>
+
+    <!-- Ajax Search Api and Stylesheet
+    // Note: If you are already using the AJAX Search API, then do not include it
+    //       or its stylesheet again
+    -->
+    <script src="http://www.google.com/uds/api?file=uds.js&v=1.0&source=uds-vbw"
+      type="text/javascript"></script>
+    <style type="text/css">
+      @import url("http://www.google.com/uds/css/gsearch.css");
+    </style>
+
+    <!-- Video Bar Code and Stylesheet -->
+    <script type="text/javascript">
+      window._uds_vbw_donotrepair = true;
+    </script>
+    <script src="http://www.google.com/uds/solutions/videobar/gsvideobar.js?mode=new"
+      type="text/javascript"></script>
+    <style type="text/css">
+      @import url("http://www.google.com/uds/solutions/videobar/gsvideobar.css");
+    </style>
+
+    <style type="text/css">
+      .playerInnerBox_gsvb .player_gsvb {
+        width : 320px;
+        height : 260px;
+      }
+    </style>
+    <script type="text/javascript">
+
+      function LoadVideoBar(queryList) {
+
+      var videoBar;
+      var options = {
+          largeResultSet : !true,
+          horizontal : true,
+          autoExecuteList : {
+            cycleTime : GSvideoBar.CYCLE_TIME_MEDIUM,
+            cycleMode : GSvideoBar.CYCLE_MODE_LINEAR,
+            executeList : queryList
+          }
+        }
+
+      videoBar = new GSvideoBar(document.getElementById("videoBar-bar"),
+                                GSvideoBar.PLAYER_ROOT_FLOATING,
+                                options);
+      }
+      // arrange for this function to be called during body.onload
+      // event processing
+      //GSearch.setOnLoadCallback(LoadVideoBar);
+    </script>
+  <% end %>
+  
+</head>
+<body>
+<div id="header">
+<h1><b>Expendicus</b> Independent Expenditure Tracking</h1>
+ <div id="menu">
+  <ul id="nav">
+   <li id="navi_home"><a href="/">Home</a></li>
+   <li id="navi_candidate"><a href="/candidate/">Candidates</a></li>
+   <li id="navi_committee"><a href="/committee/">Committees</a></li>
+	 <li id='navi_district'><a href="/district/">Districts</a></li>
+  </ul>
+ </div>
+</div>
+<div id="doc4" class="yui-t4">
+    <%= yield %>
+</div>
+	</div>
+	<div class="yui-b">
+  	<div class="box">
+  	  <h2>About </h2>	
+  	  <p><b>Expendicus</b> allows anyone to easily trace the flow of independent expenditure money from PACs to candidates. It was designed as an entry to the Sunglight Labs <li><a href="http://http://www.sunlightlabs.com/appsforamerica/">Apps for America</a> contest.</li>
+			</p>
+  	  <a href="mailto:jjh@offensivepolitics.net">Contact the author</a>.
+  	  
+  	</div>
+
+  	<div class="box">
+  	  <h2>Data Sources :</h2>	
+			<ul>
+  			<li><a href="http://services.sunlightlabs.com/api/">SunlightLabs API</a></li>
+  			<li><a href="http://www.opensecrets.org/action/apis.php">Open Secrets API</a></li>
+  			<li><a href="http://www.fec.gov/">FEC</a></li>
+			</ul>
+  	</div>
+
+	</div>
+	
+	</div>
+   <div id="ft">(C) 2009 Offensive Politics.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+# == Schema Information
+# Schema version: 20090225132948
+#
+# Table name: committees
+#
+#  id                      :integer(4)      not null, primary key
+#  fecid                   :string(255)
+#  name                    :string(255)
+#  committee_designation   :string(255)
+#  connected_org_name      :string(255)
+#  interest_group_category :string(255)
+#  committee_type          :string(255)
+#  political_party_id      :integer(4)
+#  candidate_id            :integer(4)
+#  created_at              :datetime
+#  updated_at              :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  fecid: MyString
+  name: MyString
+  connected_org_name: MyString
+  interest_group_category: MyString
+  committee_designation: MyString
+
+two:
+  fecid: MyString
+  name: MyString
+  connected_org_name: MyString
+  interest_group_category: MyString
+  committee_designation: MyString
