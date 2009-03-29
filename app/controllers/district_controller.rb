@@ -183,9 +183,9 @@ class DistrictController < ApplicationController
       xl.visible = false
       labels << xl
       v = @pac_summary[k]['S'] + @pac_summary[k]['O']
-      bv1 =BarStackValue.new(@pac_summary[k]['S'],'#4D89F9')
+      bv1 =BarStackValue.new(@pac_summary[k]['S'],'#4D89F9',{})
       bv1.set_key('Support',12)
-      bv2 =BarStackValue.new(@pac_summary[k]['O'],'#074AC5')
+      bv2 =BarStackValue.new(@pac_summary[k]['O'],'#074AC5',{})
       bv2.set_key('Oppose',12)
        
       bar.append_stack([bv1,bv2])
