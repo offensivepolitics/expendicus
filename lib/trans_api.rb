@@ -59,12 +59,4 @@ module TransAPI
   	puts args[0]
   end
 end
-#OpenSecretsAPI::api_key = "6be3831022c998769a69db71f6f5f338"
-#SunlightLabsAPI::api_key = "de2223c4280719f57f9408c4c409eb9f"
-
-#puts OpenSecretsAPI.candidate_summary(:cid => 'N00027829').inspect
-# 'Invalid CID'
-#puts OpenSecretsAPI::candidate_contributors_3('N00027829').inspect
-#puts OpenSecrets.candidate_sectors('N00027829').inspect
-#puts SunlightLabs::legislators_all_for_zip("20005").inspect
 		
