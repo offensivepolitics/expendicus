@@ -60,6 +60,7 @@ development:
 10. Edit API key
 config/environment.rb line 79
 TransAPI::OpenSecretsAPI::api_key = "<your OpenSecrets API key goes here>"
+TransAPI::SunlightLabsAPI::api_key = "<your sunlight labs API key goes here>"
 
 10. Edit Path URL - ONLY PERFORM THIS STEP IF YOU ARE NOT RUNNING IN DEVELOPMENT MODE
 config/environment.rb line 69
