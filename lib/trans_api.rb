@@ -52,11 +52,11 @@ module TransAPI
   	def self.legislators_all_for_zip(zipcode,format='xml')
   		get("#{API_BASE_URL}legislators.allForZip.#{format}",:query => {"apikey"=>@@API_KEY, :zip => zipcode})
   	end
-
+  	
+  	def self.districts_all_for_zip(zipcode, format='xml')
+  		get("#{API_BASE_URL}districts.getDistrictsFromZip.#{format}",:query => {"apikey"=>@@API_KEY, :zip => zipcode})
+	  end
   end
 
-  def somecrap(*args)
-  	puts args[0]
-  end
 end
 		

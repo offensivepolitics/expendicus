@@ -1,0 +1,23 @@
+@result_text = ''
+render_as_candidate ||= false
+if @error_string.nil? == false then
+  @result_text = "Sunlight Labs API error: <i>#{@error_string}</i>"
+elsif @results.nil? == true || @results.size == 0
+  @result_text = "No results found for <i>#{params[:zipcode]}</i>"
+
+else
+  @result_text += "<table class='dataTable'>"
+  @result_text += "<tr><td class='wide' colspan=2>Search Results</td></tr>"
+  @result_text += "<tr><th>District</th></tr>"
+  #@result_text = "<ul>"
+  @results.each do |result|
+    @result_text += "<tr>"
+    if result.is_a?(District) then
+      @result_text += "<td>" + link_to(result.to_s, district_path(result))+ "</td>"
+    end
+    @result_text += "</tr>"
+  end
+  #@result_text += "</ul>"
+  @result_text += '</table>'
+end
+page.replace_html :districtSearchResultsDiv, @result_text

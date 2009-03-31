@@ -22,6 +22,12 @@
   Candidate name: <input id="genericSearchBox">
    <%= link_to_remote 'Search', :url => {:controller => 'district',:action => 'search'},:with => "'name=' + $('genericSearchBox').value",:loading => "Element.toggle('spinner_name_search');",:complete  => "Element.toggle('spinner_name_search');" %><span id="spinner_name_search" style="display:none;"><%=image_tag 'spinner.gif'%></span></td></tr>
   <tr><td><div id="searchResultsDiv"></div>
+  <br><br>
+  <h2>Find district by zipcode</h2>
+  Zip code: <input id="zipcodeSearchBox">
+   <%= link_to_remote 'Search', :url => {:controller => 'district',:action => 'search_by_zipcode'},:with => "'zipcode=' + $('zipcodeSearchBox').value",:loading => "Element.toggle('spinner_zipcode_search');",:complete  => "Element.toggle('spinner_zipcode_search');" %><span id="spinner_zipcode_search" style="display:none;"><%=image_tag 'spinner.gif'%></span></td></tr>
+  <tr><td><div id="districtSearchResultsDiv"></div>
+  <br><br>
 </div>
 
 </div>

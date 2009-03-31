@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :candidate, :except => ['new','update']
 	map.resources :committee, :except => ['new','update']
   map.connect '/district/search',:controller => 'district', :action => 'search', :method => 'post'
+  map.connect '/district/search_by_zipcode',:controller => 'district', :action => 'search_by_zipcode', :method => 'post'
   map.auto_complete 'home/auto_complete_for_committee_name',:controller=> 'home',:action => 'auto_complete_for_committee_name' 
 	#map.resources :legislator
 	# The priority is based upon order of creation: first created -> highest priority.

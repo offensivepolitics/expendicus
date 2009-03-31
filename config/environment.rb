@@ -77,6 +77,6 @@ Rails::Initializer.run do |config|
 end
 require 'lib/trans_api.rb'
 TransAPI::OpenSecretsAPI::api_key = "6be3831022c998769a69db71f6f5f338"
-
+TransAPI::SunlightLabsAPI::api_key = "de2223c4280719f57f9408c4c409eb9f"
 #ActionController::AbstractRequest.relative_url_root = "/"
 

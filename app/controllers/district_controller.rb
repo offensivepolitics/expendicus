@@ -1,3 +1,4 @@
+include TransAPI
 class DistrictController < ApplicationController
 
 	def index
@@ -52,35 +53,45 @@ class DistrictController < ApplicationController
 
     redirect_to :action => "index" and return if @district.nil? == true
     @election = @district.find_election(2008,'G')
-    @expenditures = @district.expenditures_as_array
-    
-    @total_votes_cast = @election.candidacies.sum(:votecount)
-    
-    @candidates_support_oppose = {}
-    
-    @election.candidacies.each do |candidacy|
-      @candidates_support_oppose[candidacy.candidate_id] = {}
-      @candidates_support_oppose[candidacy.candidate_id]["S"] = 0.0
-      @candidates_support_oppose[candidacy.candidate_id]["O"] = 0.0
-    
+    @candidacies = []
+    @total_votes_cast =0
+    if @election.nil? == false
+      if @election.size >0
+        @candidacies = @election[0].candidacies
+        @total_votes_cast = @election.candidacies.sum(:votecount)
+        @candidates_support_oppose = {}
+
+        @election.candidacies.each do |candidacy|
+          @candidates_support_oppose[candidacy.candidate_id] = {}
+          @candidates_support_oppose[candidacy.candidate_id]["S"] = 0.0
+          @candidates_support_oppose[candidacy.candidate_id]["O"] = 0.0
+
+        end
+
+        @r_hash = ActiveRecord::Base.connection.execute("select candidate_id,support_oppose, sum(expenditure_amount) as 'exp_sum' from expenditures where district_id = #{@district.id} group by candidate_id,support_oppose")
+        @r_hash.each_hash { |v|
+            #@candidates_support_oppose[v["candidate_id"]] ||= {}
+            #@candidates_support_oppose[v["candidate_id"]]["S"] ||= 0.0
+            #@candidates_support_oppose[v["candidate_id"]]["O"] ||= 0.0
+            next if @candidates_support_oppose[v["candidate_id"].to_i].nil?
+            #@candidates_support_oppose[v["candidate_id"]] ||= {}
+            #@candidates_support_oppose[v["candidate_id"]]["S"] ||= 0
+            #@candidates_support_oppose[v["candidate_id"]]["O"] ||= 0
+            if v["candidate_id"].nil? == false && v["support_oppose"].nil? == false && v["exp_sum"].nil? == false
+              @candidates_support_oppose[v["candidate_id"].to_i][v["support_oppose"]] = v["exp_sum"]
+            end
+          }
+
+
+        @candidates_support_oppose||= Hash.new
+
+        @youtube_search_terms = @election.candidates.collect { |c| "#{c.firstname} #{c.lastname}"}
+        @youtube_search_terms << "#{@district.to_s}"
+      end
     end
     
-    @r_hash = ActiveRecord::Base.connection.execute("select candidate_id,support_oppose, sum(expenditure_amount) as 'exp_sum' from expenditures where district_id = #{@district.id} group by candidate_id,support_oppose")
-    @r_hash.each_hash { |v|
-        #@candidates_support_oppose[v["candidate_id"]] ||= {}
-        #@candidates_support_oppose[v["candidate_id"]]["S"] ||= 0.0
-        #@candidates_support_oppose[v["candidate_id"]]["O"] ||= 0.0
-        next if @candidates_support_oppose[v["candidate_id"].to_i].nil?
-        #@candidates_support_oppose[v["candidate_id"]] ||= {}
-        #@candidates_support_oppose[v["candidate_id"]]["S"] ||= 0
-        #@candidates_support_oppose[v["candidate_id"]]["O"] ||= 0
-        if v["candidate_id"].nil? == false && v["support_oppose"].nil? == false && v["exp_sum"].nil? == false
-          @candidates_support_oppose[v["candidate_id"].to_i][v["support_oppose"]] = v["exp_sum"]
-        end
-      }
-    
-    
-    @candidates_support_oppose||= Hash.new
+    @expenditures = @district.expenditures_as_array
+
     
     @expenditures_itemized_page = params[:expenditures_itemized_page]
     @expenditures_itemized_page ||= 1
@@ -89,8 +100,6 @@ class DistrictController < ApplicationController
         
     @pac_summary_ofc_chart = open_flash_chart_object(360,300,url_for(:controller => 'district',:action => 'pac_summary_data',:id => @district.id),true,"#{ActionController::Base.relative_url_root}/")
     
-    @youtube_search_terms = @election.candidates.collect { |c| "#{c.firstname} #{c.lastname}"}
-    @youtube_search_terms << "#{@district.to_s}"
     
     if (request.xhr?() == false || (request.xhr?() == true && params[:key].nil? == false)) then
       @expenditures_for_timeline = @district.expenditures_for_timeline
@@ -216,6 +225,37 @@ class DistrictController < ApplicationController
     
     render :text => chart.to_s
         
+  end
+  
+  def search_by_zipcode
+    zipcode = params[:zipcode] 
+    result = TransAPI::SunlightLabsAPI::districts_all_for_zip(zipcode)
+    @results = []
+    if result.is_a?(String)
+      @error_string = result
+    else
+      search_results_head = result["response"]["districts"]
+      if search_results_head.nil? == false
+        search_results = search_results_head["district"]
+        if search_results.is_a?(Hash) then
+          search_results = [search_results]
+        end
+        search_results ||= []
+        search_results.each do |result|
+          state = State.find_by_abbreviation(result["state"])
+          next if state.nil? == true
+          district = state.find_district(result["number"].to_i)
+          next if district.nil? == true
+          @results << district
+        end
+      end
+    end
+    
+    respond_to do |format|
+      format.js do
+        render :partial => 'district/search_by_district'
+      end
+    end
   end
   
 end

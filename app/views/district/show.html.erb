@@ -10,7 +10,7 @@ Candidates:
 <table class="dataTable" style="width:100%">
 <tr><td colspan="8" class="wide">Results</td></tr>
 <tr><th>Candidate Name</th><th>Party</th><th>Winner</th><th>Vote%</th><th style="text-align:right;">Support amount</th><th style="text-align:right;">Oppose Amount</th></tr>
-<% @district.elections[0].candidacies.each  do |candidacy| %>
+<% @candidacies.each  do |candidacy| %>
   <tr>
     <td><%=link_to candidacy.candidate.lastname,candidate_url(candidacy.candidate)%></td>
     <td><%=candidacy.candidate.political_party.name%></td>

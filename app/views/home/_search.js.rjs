@@ -1,14 +1,15 @@
 @result_text = ''
 render_as_candidate ||= false
-if @results.size == 0
-  @result_text = "No results found for <i>#{params[:name]}</i>"
+if @results.nil? == true || @results.size == 0
+  @result_text = "No results found for <i>#{params[:zipcode]}</i>"
 else
   @result_text += "<table class='dataTable'>"
   @result_text += "<tr><td class='wide' colspan=2>Search Results</td></tr>"
-  @result_text += "<tr><th>Type</th><th>Name</th></tr>"
+  @result_text += "<tr><th>State</th><th>Number</th></tr>"
   #@result_text = "<ul>"
   @results.each do |result|
     @result_text += "<tr>"
+    
     if result.is_a?(Committee) then
       @result_text += "<td><i>Committee</i></td>"
       @result_text += "<td>" + link_to(ellipsiate(result.name), :controller => :committee, :action => 'show',:id => result.id) + "</td>"
