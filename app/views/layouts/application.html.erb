@@ -52,7 +52,8 @@
     </style>
     <script type="text/javascript">
 
-      function LoadVideoBar(queryList) {
+      function LoadVideoBar() {
+        var searchArray = [<%="'" + @youtube_search_terms.join("','") + "'" %>];
 
       var videoBar;
       var options = {
@@ -61,7 +62,7 @@
           autoExecuteList : {
             cycleTime : GSvideoBar.CYCLE_TIME_MEDIUM,
             cycleMode : GSvideoBar.CYCLE_MODE_LINEAR,
-            executeList : queryList
+            executeList : searchArray
           }
         }
 
@@ -71,7 +72,7 @@
       }
       // arrange for this function to be called during body.onload
       // event processing
-      //GSearch.setOnLoadCallback(LoadVideoBar);
+      GSearch.setOnLoadCallback(LoadVideoBar);
     </script>
   <% end %>
   
@@ -115,5 +116,8 @@
 	</div>
    <div id="ft">(C) 2009 Offensive Politics.</div>
 </div>
+<% if @youtube_search_terms.nil? == false %>
+  
+<% end %>
 </body>
 </html>
