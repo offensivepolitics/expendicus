@@ -56,8 +56,8 @@ class DistrictController < ApplicationController
     @candidacies = []
     @total_votes_cast =0
     if @election.nil? == false
-      if @election.size >0
-        @candidacies = @election[0].candidacies
+      if @election.candidacies.size >0
+        @candidacies = @election.candidacies
         @total_votes_cast = @election.candidacies.sum(:votecount)
         @candidates_support_oppose = {}
 
