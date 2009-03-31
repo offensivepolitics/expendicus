@@ -61,11 +61,11 @@ development:
 config/environment.rb line 79
 TransAPI::OpenSecretsAPI::api_key = "<your OpenSecrets API key goes here>"
 
-10. Edit Path URL
+10. Edit Path URL - ONLY PERFORM THIS STEP IF YOU ARE NOT RUNNING IN DEVELOPMENT MODE
 config/environment.rb line 69
 Change
 config.action_controller.relative_url_root = "/expendicus"
-to match your relative root directory of expendicus. For development purposes this value should be ''
+to match your relative root directory of expendicus. 
 
 11. Run the server
 > script/server
