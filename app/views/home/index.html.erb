@@ -15,15 +15,15 @@
 <div class="yui-u"><br>
 <h2>Name Search</h2>
   <table height="100%">
-    <tr "border-style:none"><td style="border-style:none;"><input id="genericSearchBox">  </input> <%= link_to_remote 'Search', :url => {:controller => 'home',:action => 'search'},:with => "'name=' + $('genericSearchBox').value" %></td></tr>
+    <tr "border-style:none"><td style="border-style:none;"><input id="genericSearchBox">  </input> <%= link_to_remote 'Search', :url => {:controller => 'home',:action => 'search'},:with => "'name=' + $('genericSearchBox').value",:loading => "Element.toggle('spinner_name_search');",:complete  => "Element.toggle('spinner_name_search');" %><span id="spinner_name_search" style="display:none;"><%=image_tag 'spinner.gif'%></span></td></tr>
     <tr><td><div id="searchResultsDiv"></div>
     <br><br>
     <h2>Find district by state</h2>
-    <label>State:</label><%= select_tag('state',options_for_select(@states),{:include_blank => true,:selected => 0}) %><br>
+    <label>State:</label><%= select_tag('state',options_for_select(@states),{:include_blank => true,:selected => 0}) %><span id="spinner_district_search" style="display:none;"><%=image_tag 'spinner.gif'%></span><br>
     <div id="districts"><label>District:</label> <%= select_tag('district',options_for_select(@districts),{:include_blank => true}) %></div>
     <%= observe_field "state", :update => "districts",
     :with => "id", :url => { :controller => "district",
-    :action => "get_districts" } %>
+    :action => "get_districts"},:loading => "Element.toggle('spinner_district_search');", :complete =>:loading => "Element.toggle('spinner_district_search');"   %>
     <br><br>
     
   </table>
