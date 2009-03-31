@@ -19,7 +19,7 @@
   <div class="yui-u">
   <h2>Candidate Search</h2>
       <table height="70px">
-        <tr "border-style:none"><td style="border-style:none;"><input id="genericSearchBox">  </input> <%= link_to_remote 'Search', :url => {:controller => 'candidate',:action => 'search'},:with => "'name=' + $('genericSearchBox').value" %></td></tr>
+        <tr "border-style:none"><td style="border-style:none;"><input id="genericSearchBox">  </input> <%= link_to_remote 'Search', :url => {:controller => 'candidate',:action => 'search'},:with => "'name=' + $('genericSearchBox').value",:loading => "Element.toggle('spinner_name_search');",:complete  => "Element.toggle('spinner_name_search');" %><span id="spinner_name_search" style="display:none;"><%=image_tag 'spinner.gif'%></span></td></tr>
         <tr><td><div id="searchResultsDiv"></div>
       </table>
   </div>
