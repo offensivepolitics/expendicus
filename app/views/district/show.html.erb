@@ -73,8 +73,8 @@ Candidates:
       <tr><td colspan="1" class="wide">Daily Expenditure Timeline</td></tr>
       <tr><td> <%= inline_annotated_timeline @expenditures_for_timeline, 740 ,340,:displayExactValues => true %>
        </td></tr>
-       <%= link_to image_tag('icons/table_save.png',:border => 0,:alt => "Save CSV") + "  (CSV)",district_path(@district,:format => :csv,:key => "timeline") %>
     </table>
+    <%= link_to image_tag('icons/table_save.png',:border => 0,:alt => "Save CSV") + "  (CSV)",district_path(@district,:format => :csv,:key => "timeline") %>
   </div>
 </div>
 <br>
