@@ -556,6 +556,48 @@ namespace :import do
     end
 		
 	end
+	
+	desc 'blogdata'
+	task :blogdata => :environment do
+	  committee = Committee.find(11)
+	  csv = FasterCSV.open("2008-dccc.csv","w")
+	  amounts = committee.expenditures.sum(:expenditure_amount,:group => "district_id",:conditions => ["district_id <> 0"], :order => 'sum(expenditure_amount) desc')
+	  amounts.keys.each do |district_id|
+      d = District.find(district_id)
+      d_won = false
+      amount = amounts[district_id]
+      #amount = d[1]
+      #r = {"DEM"=>0, "REP" => 0}
+      d_winner = false
+      next if d.elections.size == 0
+      d.elections[0].candidacies.find(:all, :include => [:candidate],:order => "candidates.political_party_id").each do |er|
+        #r[er.abbreviation] = candidacies.winner
+        if (er.candidate.political_party_id == 1 && er.winner == 1) || 
+          (er.candidate.political_party_id != 1 && er.winner == 0) 
+          d_winner = true
+        end
+      end
+      
+      csv << ["#{d.to_s},#{amount},#{d_winner}"]
+      
+    end
+    csv.close
+    # top 10 districts by IE spending 
+    #district_totals = Expenditure.sum(:expenditure_amount,:group => 'district_id',:limit => 15, :conditions => ["district_id <> 0"])
+    #districts = district_totals.collect { |d| d[0]}
+    #csv = FasterCSV.open("2008-top-10.csv","w")
+    #districts.each do |district_id|
+    #  district = District.find(district_id)
+    #  arr = [district.state.abbreviation,district.number]
+    #  v = {"DEM" => [0,0],"REP" => [0,0]}
+    #  district.elections[0].candidates.find(:all, :include => [:candidate_financial_summaries,:political_party],:order => 'candidates.political_party_id') each do |candidate|
+        
+    #  end
+    #end
+    #csv.close
+    
+    
+  end
 
 	desc 'load all'
 	task :all => [:environment, :states,:districts,:parties, :elections, :candidates, :candidate_financial_summaries, :committees,:committee_financial_summaries,:independent_expenditures,:transaction_types,:shapefiles]

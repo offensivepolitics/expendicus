@@ -13,7 +13,7 @@ steps to get it working
 -remove frozen rails
 -plugin config
     open_flash_chart 
-   		script/plugin install http://svn.pullmonkey.com/plugins/trunk/open_flash_chart/
+   		script/plugin install git://github.com/pullmonkey/open_flash_chart.git
 	spatial adapter
 		script/plugin install svn://rubyforge.org/var/svn/georuby/SpatialAdapter/trunk/spatial_adapter
 	ym4r plugin

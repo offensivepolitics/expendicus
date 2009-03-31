@@ -59,9 +59,9 @@ class DistrictController < ApplicationController
     @candidates_support_oppose = {}
     
     @election.candidacies.each do |candidacy|
-      @candidates_support_oppose[candidacy.candidate_id] = {}
-      @candidates_support_oppose[candidacy.candidate_id]["S"] = 0.0
-      @candidates_support_oppose[candidacy.candidate_id]["O"] = 0.0
+      @candidates_support_oppose[candidacy.candidate_id.to_s] = {}
+      @candidates_support_oppose[candidacy.candidate_id.to_s]["S"] = 0.0
+      @candidates_support_oppose[candidacy.candidate_id.to_s]["O"] = 0.0
     
     end
     
