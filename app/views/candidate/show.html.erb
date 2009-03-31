@@ -32,10 +32,10 @@
           <% end %>
         </td></tr>
       <tr><td><b>VoteSmart Page</b></td><td>
-          <% if @candidate.govtrack_url.nil? %>
+          <% if @candidate.votesmart_url.nil? %>
             <i>No details</i>
           <% else %>
-            <%= link_to "#{@candidate.lastname} @GovTrack",@candidate.govtrack_url %>
+            <%= link_to "#{@candidate.lastname} @VoteSmart",@candidate.votesmart_url %>
           <% end %>
         </td></tr>
         <tr><td><b>OpenSecrets Page</b></td><td>
