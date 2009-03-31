@@ -6,7 +6,7 @@
 <div class="yui-g">
 <div class="yui-u first"><br>
   <b>Expendicus</b> allows users to view the independent expenditures made in a specific congressional race, in support of or opposition to an individual candidate, or commissioned by a particular PAC.<br><br>
-  Use the 'Name Search' to the right to find a candidate or committee by name. You can also find links to specific interesting committees and districts below. Finally you may also choose one of the 'Candidates', 'Committees', or 'Districts' tabs to explore expenditures from each of those views  
+  Use the 'Name Search' to the right to find a candidate or committee by name. <br>Use the 'District by State' to drill down to a district from a state. <br>You can also find links to specific interesting committees and districts on the summary tables below below.<br> Finally you may also choose one of the 'Candidates', 'Committees', or 'Districts' tabs to explore expenditures from each of those views  
   <br><br>
   To read more about independent expenditures and how they relate to other types of campaign contributions please view <a href="http://offensivepolitics.net/blog/?p=6">our blog entry</a> on the subject.<br>
   <br><br>
@@ -17,6 +17,15 @@
   <table height="100%">
     <tr "border-style:none"><td style="border-style:none;"><input id="genericSearchBox">  </input> <%= link_to_remote 'Search', :url => {:controller => 'home',:action => 'search'},:with => "'name=' + $('genericSearchBox').value" %></td></tr>
     <tr><td><div id="searchResultsDiv"></div>
+    <br><br>
+    <h2>Find district by state</h2>
+    <label>State:</label><%= select_tag('state',options_for_select(@states),{:include_blank => true,:selected => 0}) %><br>
+    <div id="districts"><label>District:</label> <%= select_tag('district',options_for_select(@districts),{:include_blank => true}) %></div>
+    <%= observe_field "state", :update => "districts",
+    :with => "id", :url => { :controller => "district",
+    :action => "get_districts" } %>
+    <br><br>
+    
   </table>
 
 </div>

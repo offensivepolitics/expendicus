@@ -12,6 +12,11 @@ class HomeController < ApplicationController
 		
 		#@last_expenditures = Expenditure.last_expenditures(5)
 
+    @states = State.find(:all, :order => "name", :conditions => "states.name <> '' and states.abbreviation not in ('PR','GU','AS')").collect {|s| [s.name,s.id]}
+    @states.insert(0,['Choose a state','0'])
+    @districts = []
+    
+
     @big_spenders = Expenditure.largest_spenders(5)
     
     @largest_districts = Expenditure.largest_districts(5)
